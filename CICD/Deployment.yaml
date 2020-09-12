@@ -56,7 +56,7 @@ spec:
   - host: app-bff.pub.tbiz-atcl.net
     http:
       paths:
-      - path: /svc1
+      - path: /api/svc1
         backend:
           serviceName: api-atcl-svc1
           servicePort: 30002

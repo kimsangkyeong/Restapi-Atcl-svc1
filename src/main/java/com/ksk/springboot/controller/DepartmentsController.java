@@ -19,7 +19,7 @@ import com.ksk.springboot.repository.DepartmentsRepository;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/svc1/v1")
 public class DepartmentsController {
 
 	@Autowired
