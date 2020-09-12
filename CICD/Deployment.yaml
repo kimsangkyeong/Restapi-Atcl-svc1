@@ -1,0 +1,62 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-atcl-svc1
+  namespace: fruits
+  labels:
+    app: api-atcl-svc1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-atcl-svc1
+  template:
+    metadata:
+      labels:
+        app: api-atcl-svc1
+    spec:
+      containers:
+      - name: api-atcl-svc1
+        image: 847322629192.dkr.ecr.ap-northeast-2.amazonaws.com/api-backend-dualcidr:1.1
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 30002
+          name: http
+          protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-atcl-svc1
+  namespace: fruits
+spec:
+  selector:
+    app: api-atcl-svc1
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 30002
+      protocol: TCP
+      targetPort: 30002
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: api-atcl-svc1-pub-ingress
+  namespace: fruits
+  labels:
+    app: api-atcl-svc1
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    ingress.kubernetes.io/rewrite-target: /
+    ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  rules:
+  - host: app-bff.pub.tbiz-atcl.net
+    http:
+      paths:
+      - path: /svc1
+        backend:
+          serviceName: api-atcl-svc1
+          servicePort: 30002
