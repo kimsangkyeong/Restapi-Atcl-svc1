@@ -5,7 +5,7 @@ def ecr_url        = "847322629192.dkr.ecr.ap-northeast-2.amazonaws.com"
 def ecr_repo       = "api-backend-dualcidr"
 def namespace      = "fruits"
 def app            = "api-atcl-svc1"
-def app_ver        = "1.0"
+def app_ver        = "1.1"
 def ecr_credential = "not_yet"
 
 def image_tag      = "${ecr_url}/${ecr_repo}:${app_ver}"
